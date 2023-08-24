@@ -6,10 +6,10 @@ const ListadoGastos = ({gastos}) => {
       <h2>{ gastos.length ? 'gastos' : 'no hay gastos' }</h2>
      
       
-      {(Array.isArray(gastos)) ? (gastos.map (gasto => ( 
+      {(gastos.map (gasto => ( 
             <Gasto key={gasto.id}
             gasto={gasto}/>
-         ))) : (console.log("gastos no es un array", console.log(gastos)))}
+         ))}
 
 
    </div>
