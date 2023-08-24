@@ -6,10 +6,10 @@ const ListadoGastos = ({gastos}) => {
       <h2>{ gastos.length ? 'gastos' : 'no hay gastos' }</h2>
      
       
-      {(gastos.map (gasto => ( 
+      {gastos.map (gasto => ( 
             <Gasto key={gasto.id}
             gasto={gasto}/>
-         ))}
+         )}
 
 
    </div>
