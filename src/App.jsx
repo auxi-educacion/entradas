@@ -5,6 +5,7 @@ import ListadoGastos from "./components/ListadoGastos";
 import { generarId } from "./helpers";
 import IconoGasto from './img/nuevo-gasto.svg'
 
+
 function App() {
   const [gastos, setGastos]=useState([])
   const [presupuesto, setPresupuesto] = useState(0)
@@ -27,7 +28,7 @@ function App() {
      setModal(false)
     },500);
   }
-
+  
   return (
     <div className={modal ? 'fijar': ''}>
       <Header
