@@ -15,17 +15,15 @@ const header = ({
       { isValidPresupuesto ? (
         <ControlPresupuesto
         gastos={gastos}
-        presupuesto = {presupuesto}
-        setPresupuesto = {setPresupuesto}
-        setIsValidPresupuesto = {setIsValidPresupuesto}
-      />):(
+        presupuesto = {presupuesto}/>
+        
+        ):(
+
         <NuevoPresupuesto
           presupuesto = {presupuesto}
           setPresupuesto = {setPresupuesto}
-          setIsValidPresupuesto = {setIsValidPresupuesto}
-        />
-      )}
-      
+          setIsValidPresupuesto = {setIsValidPresupuesto}/>)}
+    
     </header>
   )
 }
