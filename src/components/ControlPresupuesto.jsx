@@ -1,17 +1,30 @@
 import { useState, useEffect } from "react"
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
+import 'react-circular-progressbar/dist/styles.css'
+const ControlPresupuesto = ({
+  gastos, 
+  presupuesto, 
+  setPresupuesto, 
+  setGastos,
+  setIsValidPresupuesto}) => {
 
-const ControlPresupuesto = ({gastos, presupuesto}) => {
-
+  const [porcentaje, setPorcentaje] = useState(0)
   const [disponible, setDisponible] = useState(0)
   const [gastado, setGastado] = useState(0)
 
   useEffect(() => {
-  const totalGastado = gastos.reduce((total, gasto ) => gasto.cantidad + total, 0);
-  const totalDisponible = presupuesto - totalGastado
+  const totalGastado = gastos.reduce((total, gasto ) => gasto.cantidad+total , 0);
+  const totalDisponible = presupuesto - totalGastado;
   
+  const porcentaje = ((presupuesto - totalDisponible)/presupuesto) * 100;
+  const nuevoPorcentaje = (Math.round(porcentaje * 100) / 100).toFixed(2); 
+
+
   setDisponible(totalDisponible)
   setGastado(totalGastado)
-  },[gastos])
+  setTimeout(() => {
+    setPorcentaje(nuevoPorcentaje)},700)
+  },[gastos, presupuesto])
 
   const formatearCantidad = (cantidad) => {
     return cantidad.toLocaleString('en-US',{
@@ -19,17 +32,39 @@ const ControlPresupuesto = ({gastos, presupuesto}) => {
       currency: 'USD'
     })
   }
-
+  const handleRessetApp=()=>{
+    const resultado = confirm('Vamos a reseat el gasto..')
+    if (resultado) {
+      setGastos([])
+      setPresupuesto(0)
+      setIsValidPresupuesto(false)}
+  }
   return (
     <div className = "contenedor-presupuesto contenedor sombra dos-columnas">
       <div>
-        <p>Grafica aqui</p>
+        <p><CircularProgressbar
+        
+              text={`${porcentaje}%`}
+              styles={buildStyles({
+                pathColor: porcentaje > 100 ? '#DC2626':'#3B82F6',
+                trailColor:'#F5F5F5',
+                textColor : porcentaje > 100 ? '#DC2626':'#3B82F6',
+                textSize: '16px',
+                pathTransitionDuration: 0.5,
+              })}
+              value={ porcentaje }/></p>
       </div>
       <div className = "contenido-presupuesto">
+        <button 
+          className="reset-app"
+          type="button"
+          onClick={handleRessetApp}>
+          Resetear APP
+        </button>
         <p>
           <span>Presupuesto: </span> {formatearCantidad(presupuesto)}
         </p>
-        <p>
+        <p className={`${disponible < 0 && 'negativo'}`}>
           <span>Disponible: </span> {formatearCantidad(disponible)}
         </p>
         <p>

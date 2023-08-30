@@ -8,33 +8,38 @@ const Modal = ({setModal,
    animarModal, 
    setAnimarModal, 
    guardarGasto, 
-   gastoEditar}) => {
+   gastoEditar,
+   setGastoEditar}) => {
 
    const [mensaje, setMensaje]=useState('')
    const [nombre, setNombre]=useState('')
    const [cantidad, setCantidad]=useState('')
    const [categoria, setCategoria]=useState('')
+   const [fecha, setFecha]=useState('')
+   const [id, setId] = useState('')
    
    useEffect(()=>{
       Object.keys(gastoEditar).length > 0 &&
       setNombre(gastoEditar.nombre)
       setCantidad(gastoEditar.cantidad)
-      setCategoria(gastoEditar.categoria)},[gastoEditar])
+      setCategoria(gastoEditar.categoria)
+      setId(gastoEditar.id)
+      setFecha(gastoEditar.fecha)},[gastoEditar])
 
    useEffect(()=>{ setMensaje('')},[nombre, cantidad, categoria])
 
    const ocultarModal = ()=>{
       setAnimarModal(false)
+      setGastoEditar({})
       setTimeout(()=>{setModal(false)},500);}
 
-   const handleSubmit = e => {
-      e.preventDefault();
+   const handleSubmit = e => {e.preventDefault();
 
       if([nombre, cantidad, categoria].includes("")){
          setMensaje('Todos los campos son obligarios')
          return}
 
-      guardarGasto({nombre, cantidad, categoria})}
+      guardarGasto({nombre, cantidad, categoria, id, fecha})}
 
   return (
     <div className="modal">
@@ -69,7 +74,7 @@ const Modal = ({setModal,
                type='number'
                placeholder='Añade la cantidad de gastos Ej.300'
                value={cantidad}
-               onChange={ e =>setCantidad(e.target.value)}/>
+               onChange={ e =>setCantidad(Number(e.target.value))}/>
          </div>
 
          <div className='campo'>
@@ -78,7 +83,6 @@ const Modal = ({setModal,
             <select id='categoria'
                value={categoria}
                onChange={ e =>setCategoria(e.target.value)}>
-
                <option value=''>-- Seleccione --</option>
                <option value='comida'>Comida</option>
                <option value='casa'>Casa</option>

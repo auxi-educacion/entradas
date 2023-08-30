@@ -24,7 +24,6 @@ const NuevoPresupuesto = ({presupuesto,setPresupuesto, setIsValidPresupuesto}) =
             value={presupuesto}
             onChange={e=> setPresupuesto(Number(e.target.value))}/></div>
 
-          {/* aqui esta el boton */}
         <input type="submit" value="Anhadir"/>
         {mensaje && <Mensaje tipo='error'>{mensaje}</Mensaje>}</form></div>)}
 
